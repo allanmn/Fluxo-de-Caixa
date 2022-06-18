@@ -4,6 +4,10 @@
  */
 package Main;
 
+import bd.DatabaseController;
+import bd.Leitor;
+import java.io.EOFException;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
@@ -20,6 +24,12 @@ public class Main extends Application {
     
     @Override
     public void start(Stage primaryStage) throws IOException {
+        
+        DatabaseController bd = new DatabaseController();
+        
+        DatabaseController.createDB();
+        DatabaseController.createTables();
+        
         Parent root = FXMLLoader.load(getClass().getResource("/Views/CategoryPage.fxml"));
         
         Scene scene = new Scene(root, 500, 500);

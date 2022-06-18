@@ -4,9 +4,9 @@
  */
 package DAO;
 
-import Controllers.CategoriasContasJpaController;
+import controllers.CategoriasContasJpaController;
 import controllers.exceptions.NonexistentEntityException;
-import Entidades.CategoriasContas;
+import entidades.CategoriasContas;
 import java.util.List;
 
 /**

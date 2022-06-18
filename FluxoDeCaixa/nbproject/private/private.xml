@@ -3,10 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/Users/allanneves/NetBeansProjects/FluxoDeCaixa/src/DAO/ModeloDAO.java</file>
-            <file>file:/Users/allanneves/NetBeansProjects/FluxoDeCaixa/src/ViewsControllers/DashboardPageController.java</file>
-            <file>file:/Users/allanneves/NetBeansProjects/FluxoDeCaixa/src/Main/Main.java</file>
-            <file>file:/Users/allanneves/NetBeansProjects/FluxoDeCaixa/src/META-INF/persistence.xml</file>
+            <file>file:/Users/beraldo/Kool%20Stuff/Faculdade/Fluxo-de-Caixa/FluxoDeCaixa/src/META-INF/persistence.xml</file>
+            <file>file:/Users/beraldo/Kool%20Stuff/Faculdade/Fluxo-de-Caixa/FluxoDeCaixa/src/bd/Leitor.java</file>
+            <file>file:/Users/beraldo/Kool%20Stuff/Faculdade/Fluxo-de-Caixa/FluxoDeCaixa/src/Main/Main.java</file>
+            <file>file:/Users/beraldo/Kool%20Stuff/Faculdade/Fluxo-de-Caixa/FluxoDeCaixa/src/bd/sql.txt</file>
+            <file>file:/Users/beraldo/Kool%20Stuff/Faculdade/Fluxo-de-Caixa/FluxoDeCaixa/src/bd/DatabaseController.java</file>
         </group>
     </open-files>
 </project-private>

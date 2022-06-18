@@ -5,7 +5,7 @@
 package ViewsControllers.CategoryPageControllerViewsControllers;
 
 import DAO.CategoriaContaDAO;
-import Entidades.CategoriasContas;
+import entidades.CategoriasContas;
 import controllers.exceptions.NonexistentEntityException;
 import java.net.URL;
 import java.util.ResourceBundle;
