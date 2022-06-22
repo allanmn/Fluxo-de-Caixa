@@ -24,13 +24,7 @@ public class Main extends Application {
     
     @Override
     public void start(Stage primaryStage) throws IOException {
-        
-        DatabaseController bd = new DatabaseController();
-        
-        DatabaseController.createDB();
-        DatabaseController.createTables();
-        
-        Parent root = FXMLLoader.load(getClass().getResource("/Views/CategoryPage.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/Views/DashboardPage.fxml"));
         
         Scene scene = new Scene(root, 500, 500);
         

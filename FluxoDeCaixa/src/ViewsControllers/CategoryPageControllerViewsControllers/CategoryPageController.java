@@ -5,6 +5,7 @@
 package ViewsControllers.CategoryPageControllerViewsControllers;
 
 import DAO.CategoriaContaDAO;
+import Exceptions.ValidationException;
 import entidades.CategoriasContas;
 import controllers.exceptions.NonexistentEntityException;
 import java.net.URL;
@@ -22,6 +23,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 import javax.swing.JOptionPane;
 
 /**
@@ -37,8 +39,6 @@ public class CategoryPageController implements Initializable {
     private ToggleButton togglePositive;
     @FXML
     private Button saveButton;
-    @FXML
-    private Button closeButton;
     
     private boolean toogleChosen = false;
     
@@ -53,6 +53,13 @@ public class CategoryPageController implements Initializable {
     @FXML
     private TableColumn<CategoriasContas, String> colPos;
     @FXML
+    private Button btnNew;
+    
+    private CategoriasContas selectedCategory;
+    @FXML
+    private AnchorPane editPane;
+    @FXML
+    private Button deleteButton;
     /**
      * Initializes the controller class.
      */
@@ -78,14 +85,45 @@ public class CategoryPageController implements Initializable {
 
     @FXML
     private void tooglePositive(ActionEvent event) {
+        this.toogleChosen = !this.toogleChosen;
+        
+        if (this.toogleChosen == true) {
+            this.togglePositive.setText("Sim");
+        } else {
+            this.togglePositive.setText("Nâo");
+        }
     }
 
     @FXML
     private void save(ActionEvent event) {
+        try {
+            banco = new CategoriaContaDAO();
+            
+            this.selectedCategory.setDescricao(this.txtDescription.getText());
+            this.selectedCategory.setPositiva(this.toogleChosen);
+            
+            banco.inserir(this.selectedCategory);
+        } catch (ValidationException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Informações inválidas", JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Ocorreu um erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+
+    @FXML
+    private void newCategoryAdd(ActionEvent event) {
+        this.selectedCategory = new CategoriasContas();
+        this.editPane.setVisible(true);
     }
 
     @FXML
-    private void close(ActionEvent event) {
+    private void delete(ActionEvent event) {
+        if (this.selectedCategory.getCodigo() == null) {
+            JOptionPane.showMessageDialog(null, "Não é possível deletar.");
+        } else {
+            
+        }
     }
     
 }

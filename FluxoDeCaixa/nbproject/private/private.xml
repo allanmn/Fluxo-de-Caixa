@@ -3,11 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/Users/beraldo/Kool%20Stuff/Faculdade/Fluxo-de-Caixa/FluxoDeCaixa/src/META-INF/persistence.xml</file>
-            <file>file:/Users/beraldo/Kool%20Stuff/Faculdade/Fluxo-de-Caixa/FluxoDeCaixa/src/bd/Leitor.java</file>
-            <file>file:/Users/beraldo/Kool%20Stuff/Faculdade/Fluxo-de-Caixa/FluxoDeCaixa/src/Main/Main.java</file>
-            <file>file:/Users/beraldo/Kool%20Stuff/Faculdade/Fluxo-de-Caixa/FluxoDeCaixa/src/bd/sql.txt</file>
-            <file>file:/Users/beraldo/Kool%20Stuff/Faculdade/Fluxo-de-Caixa/FluxoDeCaixa/src/bd/DatabaseController.java</file>
+            <file>file:/C:/Users/allan/Documents/Fluxo-de-Caixa/FluxoDeCaixa/src/ViewsControllers/CategoryPageControllerViewsControllers/CategoryPageController.java</file>
+            <file>file:/C:/Users/allan/Documents/Fluxo-de-Caixa/FluxoDeCaixa/src/Controllers/CategoriasContasJpaController.java</file>
+            <file>file:/C:/Users/allan/Documents/Fluxo-de-Caixa/FluxoDeCaixa/src/Exceptions/ValidationException.java</file>
+            <file>file:/C:/Users/allan/Documents/Fluxo-de-Caixa/FluxoDeCaixa/src/DAO/CategoriaContaDAO.java</file>
         </group>
     </open-files>
 </project-private>
