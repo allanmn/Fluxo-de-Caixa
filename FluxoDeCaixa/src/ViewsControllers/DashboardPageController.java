@@ -56,6 +56,7 @@ public class DashboardPageController implements Initializable {
 
     @FXML
     private void openCategoryPage(ActionEvent event) {
+        System.out.println("aaa");
         try {
             openView("CategoryPage.fxml");
         } catch (Exception ex) {
