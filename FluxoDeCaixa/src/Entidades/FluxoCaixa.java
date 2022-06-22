@@ -4,6 +4,8 @@
  */
 package entidades;
 
+import entidades.CategoriasContas;
+import entidades.SubCategorias;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -151,7 +153,8 @@ public class FluxoCaixa implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.FluxoCaixa[ id=" + id + " ]";
+        return "FluxoCaixa{" + "id=" + id + ", dataOcorrencia=" + dataOcorrencia + ", descricao=" + descricao + ", valor=" + valor + ", formaPagto=" + formaPagto + ", codSubCat=" + codSubCat + ", codCat=" + codCat + '}';
     }
+
     
 }
