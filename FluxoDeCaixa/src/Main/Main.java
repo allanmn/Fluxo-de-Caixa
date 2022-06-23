@@ -25,8 +25,6 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         
-        DatabaseController bd = new DatabaseController();
-        
         DatabaseController.createDB();
         DatabaseController.createTables();
         

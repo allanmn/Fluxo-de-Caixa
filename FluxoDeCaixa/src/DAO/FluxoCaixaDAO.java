@@ -6,7 +6,7 @@ package DAO;
 
 import controllers.FluxoCaixaJpaController;
 import controllers.exceptions.NonexistentEntityException;
-import entidades.FluxoCaixa;
+import Entidades.FluxoCaixa;
 import java.util.List;
 
 /**
@@ -52,17 +52,17 @@ public class FluxoCaixaDAO extends ModeloDAO<FluxoCaixa, FluxoCaixaJpaController
 
     @Override
     public FluxoCaixa consultar(Integer id) throws Exception {
-        FluxoCaixa categoria = null;
+        FluxoCaixa fluxo_caixa = null;
         try {
-            categoria = objetoJPA.findFluxoCaixa(id);
-            if (categoria == null) {
+            fluxo_caixa = objetoJPA.findFluxoCaixa(id);
+            if (fluxo_caixa == null) {
                 throw new NonexistentEntityException
                     ("Não existe este fluxo de caixa no banco: " + id);
             }
         } catch (NonexistentEntityException ex) {
             throw new Exception(ex.getMessage());
         } finally {
-            return categoria;
+            return fluxo_caixa;
         }
     }
     
