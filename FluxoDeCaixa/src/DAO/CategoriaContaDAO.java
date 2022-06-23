@@ -7,7 +7,7 @@ package DAO;
 import Exceptions.ValidationException;
 import controllers.CategoriasContasJpaController;
 import controllers.exceptions.NonexistentEntityException;
-import entidades.CategoriasContas;
+import Entidades.CategoriasContas;
 import java.util.List;
 
 /**

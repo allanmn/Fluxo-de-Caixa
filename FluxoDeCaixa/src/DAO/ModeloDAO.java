@@ -21,14 +21,8 @@ public abstract class ModeloDAO<To, Tj> {
     }
 
     public abstract void inserir(To objeto)throws Exception;
-//        objetoJPA.create(objeto);
 
     public abstract void editar(To objeto) throws Exception;
-//        try {
-//            objetoJPA.edit(objeto);
-//        } catch (NonexistentEntityException ex) {
-//            throw new Exception("Não existe esta venda no banco: " + objeto);
-//        }
 
     public abstract void excluir(Integer id) throws Exception;
 

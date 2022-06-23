@@ -24,11 +24,15 @@ public class Main extends Application {
     
     @Override
     public void start(Stage primaryStage) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/Views/DashboardPage.fxml"));
         
-        Scene scene = new Scene(root, 500, 500);
+        DatabaseController.createDB();
+        DatabaseController.createTables();
         
-        primaryStage.setTitle("Dashboard");
+        Parent root = FXMLLoader.load(getClass().getResource("/Views/FluxoCaixa.fxml"));
+        
+        Scene scene = new Scene(root, 800, 600);
+        
+        primaryStage.setTitle("Fluxo de Caixa");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
