@@ -24,9 +24,12 @@ public class Main extends Application {
     
     @Override
     public void start(Stage primaryStage) throws IOException {
+        DatabaseController.createDB();
+        DatabaseController.createTables();
+        
         Parent root = FXMLLoader.load(getClass().getResource("/Views/DashboardPage.fxml"));
         
-        Scene scene = new Scene(root, 500, 500);
+        Scene scene = new Scene(root, 700, 700);
         
         primaryStage.setTitle("Dashboard");
         primaryStage.setScene(scene);
