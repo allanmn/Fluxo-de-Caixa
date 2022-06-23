@@ -4,8 +4,6 @@
  */
 package entidades;
 
-import entidades.CategoriasContas;
-import entidades.SubCategorias;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -22,7 +20,7 @@ import javax.persistence.TemporalType;
 
 /**
  *
- * @author allanneves
+ * @author beraldo
  */
 @Entity
 @Table(name = "FluxoCaixa")
@@ -153,8 +151,7 @@ public class FluxoCaixa implements Serializable {
 
     @Override
     public String toString() {
-        return "FluxoCaixa{" + "id=" + id + ", dataOcorrencia=" + dataOcorrencia + ", descricao=" + descricao + ", valor=" + valor + ", formaPagto=" + formaPagto + ", codSubCat=" + codSubCat + ", codCat=" + codCat + '}';
+        return "entidades.FluxoCaixa[ id=" + id + " ]";
     }
-
     
 }

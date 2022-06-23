@@ -50,16 +50,21 @@ public class FluxoCaixaController implements Initializable {
     private Button destroy;
     @FXML
     private Button edit;
-    
-    private FluxoCaixaDAO fluxo_caixa_service;
-    
+
+    private FluxoCaixaDAO banco;
+
     private FluxoCaixa selectedModel;
+    
+    private FluxoCaixa model;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+        this.banco = new FluxoCaixaDAO();
+        this.selectedModel = new FluxoCaixa();
 
         TableColumn idColumn = new TableColumn("ID");
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -88,15 +93,19 @@ public class FluxoCaixaController implements Initializable {
     public void save() {
         Date converted_date = Date.from(this.date.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
         Double value_converted = Double.parseDouble(this.value.getText());
-        FluxoCaixa model = new FluxoCaixa(
-                1,
-                converted_date,
-                this.description.getText(),
-                value_converted,
-                1
-        );
+        
+        this.selectedModel.setDataOcorrencia(converted_date);
+        this.selectedModel.setDescricao(this.description.getText());
+        this.selectedModel.setFormaPagto(1);
+        this.selectedModel.setValor(value_converted);
 
-        this.table.getItems().add(model);
+        try {
+            this.banco.inserir(this.selectedModel);
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+
+        this.table.getItems().add(this.selectedModel);
 
     }
 
@@ -112,11 +121,6 @@ public class FluxoCaixaController implements Initializable {
                 value_converted,
                 1
         );
-        try{
-            this.fluxo_caixa_service.inserir(new_model);
-        } catch(Exception ex){
-            
-        }
         this.table.getItems().set(index, new_model);
     }
 
