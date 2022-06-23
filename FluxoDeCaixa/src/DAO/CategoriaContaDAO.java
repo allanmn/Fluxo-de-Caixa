@@ -4,6 +4,7 @@
  */
 package DAO;
 
+import Exceptions.ValidationException;
 import controllers.CategoriasContasJpaController;
 import controllers.exceptions.NonexistentEntityException;
 import entidades.CategoriasContas;
@@ -19,7 +20,11 @@ public class CategoriaContaDAO extends ModeloDAO<CategoriasContas, CategoriasCon
     }
 
     @Override
-    public void inserir(CategoriasContas objeto) throws Exception {
+    public void inserir(CategoriasContas objeto) throws Exception, ValidationException {
+        if (objeto.getDescricao() == null || objeto.getDescricao().equals("")) {
+            throw new ValidationException("Descrição");
+        }
+        
         objetoJPA.create(objeto);
     }
 
