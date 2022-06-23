@@ -21,17 +21,21 @@ import javafx.stage.Stage;
  * @author allanneves
  */
 public class Main extends Application {
-    
+
     @Override
     public void start(Stage primaryStage) throws IOException {
         DatabaseController.createDB();
         DatabaseController.createTables();
-        
+
         Parent root = FXMLLoader.load(getClass().getResource("/Views/DashboardPage.fxml"));
-        
+
         Scene scene = new Scene(root, 700, 700);
-        
-        primaryStage.setTitle("Dashboard");
+
+        Parent root = FXMLLoader.load(getClass().getResource("/Views/FluxoCaixa.fxml"));
+
+        Scene scene = new Scene(root, 800, 600);
+
+        primaryStage.setTitle("Fluxo de Caixa");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
@@ -42,5 +46,5 @@ public class Main extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-    
+
 }
