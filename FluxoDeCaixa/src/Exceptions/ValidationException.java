@@ -15,8 +15,8 @@ public class ValidationException extends Exception {
     public ValidationException (String message) {
         this.validationMessage = message;
     }
-    
-    public String getMesssage() {
+
+    public Object getErrorMessage() {
         System.out.println(this.validationMessage);
         return "O campo " + this.validationMessage + " é obrigatório.";
     }

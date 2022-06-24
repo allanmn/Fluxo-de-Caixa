@@ -12,6 +12,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.property.ReadOnlyStringWrapper;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -24,7 +26,9 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 
 /**
  * FXML Controller class
@@ -57,7 +61,7 @@ public class CategoryPageController implements Initializable {
     
     private CategoriasContas selectedCategory;
     @FXML
-    private AnchorPane editPane;
+    private HBox editPane;
     @FXML
     private Button deleteButton;
     /**
@@ -75,18 +79,34 @@ public class CategoryPageController implements Initializable {
             colDesc.setCellValueFactory(
                     new PropertyValueFactory<>("descricao")
             );
-            colPos.setCellValueFactory(
-                    new PropertyValueFactory<>("positiva")
-            );
+            colPos.setCellValueFactory(cellData -> {
+                boolean pos = cellData.getValue().getPositiva();
+                String posString;
+                if (pos == true) {
+                    posString = "Positiva";
+                }
+                else {
+                    posString = "Negativa";
+                }
+                return new ReadOnlyStringWrapper(posString);
+            });
+            
+            this.tabela.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+                setValues(newSelection);
+            });
         } catch (NonexistentEntityException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }    
-
+    
     @FXML
     private void tooglePositive(ActionEvent event) {
         this.toogleChosen = !this.toogleChosen;
         
+        setToogleText();
+    }
+    
+    private void setToogleText() {
         if (this.toogleChosen == true) {
             this.togglePositive.setText("Sim");
         } else {
@@ -102,9 +122,24 @@ public class CategoryPageController implements Initializable {
             this.selectedCategory.setDescricao(this.txtDescription.getText());
             this.selectedCategory.setPositiva(this.toogleChosen);
             
-            banco.inserir(this.selectedCategory);
+            if (this.selectedCategory.getCodigo() != null) {
+                banco.editar(selectedCategory);
+            } else {
+                banco.inserir(this.selectedCategory);
+            }
+            
+            JOptionPane.showMessageDialog(null, "Categoria salva com sucesso.", "Salvo com sucesso", JOptionPane.INFORMATION_MESSAGE);
+            
+            this.selectedCategory = new CategoriasContas();
+            
+            listaCategorias = FXCollections.observableArrayList(banco.consultar());
+            
+            tabela.getItems().clear();
+            tabela.setItems(listaCategorias);
+            
+            this.cleanInputs();
         } catch (ValidationException ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage(), "Informações inválidas", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, ex.getErrorMessage(), "Informações inválidas", JOptionPane.INFORMATION_MESSAGE);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Ocorreu um erro", JOptionPane.ERROR_MESSAGE);
         }
@@ -113,8 +148,10 @@ public class CategoryPageController implements Initializable {
 
     @FXML
     private void newCategoryAdd(ActionEvent event) {
+        this.cleanInputs();
         this.selectedCategory = new CategoriasContas();
         this.editPane.setVisible(true);
+        this.deleteButton.setVisible(false);
     }
 
     @FXML
@@ -123,6 +160,49 @@ public class CategoryPageController implements Initializable {
             JOptionPane.showMessageDialog(null, "Não é possível deletar.");
         } else {
             
+            UIManager.put("OptionPane.noButtonText", "Não");
+            UIManager.put("OptionPane.yesButtonText", "Sim");
+            
+            int result = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja excluir?", "Cuidado", JOptionPane.YES_NO_OPTION);
+            
+            if (result == 0) {
+                try {
+                    banco = new CategoriaContaDAO();
+                
+                    banco.excluir(selectedCategory);
+                
+                    JOptionPane.showMessageDialog(null, "Categoria excluída com sucesso.", "Categoria excluída",JOptionPane.INFORMATION_MESSAGE);
+                    
+                    this.selectedCategory = new CategoriasContas();
+            
+                    listaCategorias = FXCollections.observableArrayList(banco.consultar());
+                    
+                    tabela.setItems(listaCategorias);
+                    
+                    cleanInputs();
+                }
+                catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        }
+    }
+    
+    private void cleanInputs() {
+        this.txtDescription.setText("");
+        this.toogleChosen = false;
+        this.setToogleText();
+        this.editPane.setVisible(false);
+    }
+
+    private void setValues(CategoriasContas newSelection) {
+        if (newSelection != null) {
+            this.selectedCategory = newSelection;
+            this.editPane.setVisible(true);
+            this.txtDescription.setText(this.selectedCategory.getDescricao());
+            this.toogleChosen = this.selectedCategory.getPositiva();
+            this.setToogleText();
+            this.deleteButton.setVisible(true);
         }
     }
     
