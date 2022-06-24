@@ -28,6 +28,7 @@ import javax.persistence.TemporalType;
     @NamedQuery(name = "FluxoCaixa.findAll", query = "SELECT f FROM FluxoCaixa f"),
     @NamedQuery(name = "FluxoCaixa.findById", query = "SELECT f FROM FluxoCaixa f WHERE f.id = :id"),
     @NamedQuery(name = "FluxoCaixa.findByDataOcorrencia", query = "SELECT f FROM FluxoCaixa f WHERE f.dataOcorrencia = :dataOcorrencia"),
+    @NamedQuery(name = "FluxoCaixa.findByDataOcorrenciaAndAPagar", query = "SELECT f FROM FluxoCaixa f WHERE f.codCat = :codCat AND f.dataOcorrencia = :dataOcorrencia"),
     @NamedQuery(name = "FluxoCaixa.findByDescricao", query = "SELECT f FROM FluxoCaixa f WHERE f.descricao = :descricao"),
     @NamedQuery(name = "FluxoCaixa.findByValor", query = "SELECT f FROM FluxoCaixa f WHERE f.valor = :valor"),
     @NamedQuery(name = "FluxoCaixa.findByFormaPagto", query = "SELECT f FROM FluxoCaixa f WHERE f.formaPagto = :formaPagto")})
