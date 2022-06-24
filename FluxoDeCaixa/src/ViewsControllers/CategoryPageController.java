@@ -2,11 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
  */
-package ViewsControllers.CategoryPageControllerViewsControllers;
+package ViewsControllers;
 
 import DAO.CategoriaContaDAO;
 import Exceptions.ValidationException;
-import entidades.CategoriasContas;
+import Entidades.CategoriasContas;
 import controllers.exceptions.NonexistentEntityException;
 import java.net.URL;
 import java.util.ResourceBundle;
