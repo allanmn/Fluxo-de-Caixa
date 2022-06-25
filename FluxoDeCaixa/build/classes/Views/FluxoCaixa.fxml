@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.TilePane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewsControllers.FluxoCaixaController">
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewsControllers.FluxoCaixaController">
     <children>
         <VBox prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
@@ -48,9 +48,7 @@
                         <Label text="Forma de Pagamento:" />
                         <ComboBox fx:id="payment_method" prefWidth="150.0" />
                         <Label text="Categoria:" />
-                        <ComboBox fx:id="category" onAction="#checkSubCategory" prefWidth="150.0" />
-                        <Label layoutX="447.0" layoutY="77.0" text="Sub Categoria" />
-                        <ComboBox fx:id="sub_category" disable="true" layoutX="540.0" layoutY="72.0" prefWidth="150.0" />
+                        <ComboBox fx:id="category" prefWidth="150.0" />
                      </children>
                   </TilePane>
                     </children>
