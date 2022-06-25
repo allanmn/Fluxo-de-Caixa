@@ -109,7 +109,7 @@ public class SubCategorias implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.SubCategorias[ codSub=" + codSub + " ]";
+        return descricao;
     }
     
 }

@@ -10,6 +10,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -43,7 +44,7 @@ public class CategoriasContas implements Serializable {
     @Basic(optional = false)
     @Column(name = "positiva")
     private boolean positiva;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codCat")
+    @OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER, mappedBy = "codCat")
     private Collection<SubCategorias> subCategoriasCollection;
     @OneToMany(mappedBy = "codCat")
     private Collection<FluxoCaixa> fluxoCaixaCollection;
@@ -123,7 +124,7 @@ public class CategoriasContas implements Serializable {
 
     @Override
     public String toString() {
-        return "CategoriasContas{" + "codigo=" + codigo + ", descricao=" + descricao + ", positiva=" + positiva + ", subCategoriasCollection=" + subCategoriasCollection + ", fluxoCaixaCollection=" + fluxoCaixaCollection + '}';
+        return descricao;
     }
 
     

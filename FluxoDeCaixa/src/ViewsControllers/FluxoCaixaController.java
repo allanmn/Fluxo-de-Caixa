@@ -9,6 +9,7 @@ import DAO.FluxoCaixaDAO;
 import Entidades.CategoriasContas;
 import Entidades.FluxoCaixa;
 import Entidades.Pagamento;
+import Entidades.SubCategorias;
 import controllers.exceptions.NonexistentEntityException;
 import helpers.Helper;
 import java.net.URL;
@@ -18,16 +19,19 @@ import java.util.Date;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.Callback;
 import javax.swing.JOptionPane;
 
 /**
@@ -67,6 +71,10 @@ public class FluxoCaixaController implements Initializable {
 
     private ObservableList<Pagamento> listaPagamento;
 
+    private ObservableList<SubCategorias> lista_sub_categoria;
+    @FXML
+    private ComboBox<SubCategorias> sub_category;
+
     /**
      * Initializes the controller class.
      */
@@ -80,7 +88,6 @@ public class FluxoCaixaController implements Initializable {
             listaFluxoCaixa = FXCollections.observableArrayList(banco.consultar());
             listaCategoria = FXCollections.observableArrayList(categoria_service.consultar());
             listaPagamento = FXCollections.observableArrayList(Pagamento.values());
-            System.out.println(categoria_service.consultar());
 
             TableColumn idColumn = new TableColumn("ID");
             idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -130,6 +137,25 @@ public class FluxoCaixaController implements Initializable {
             });
             catColumn.setCellValueFactory(new PropertyValueFactory<>("codCat"));
 
+            TableColumn subCatColumn = new TableColumn("Sub Categoria");
+            subCatColumn.setCellFactory(column -> {
+                TableCell<FluxoCaixa, SubCategorias> cell = new TableCell<FluxoCaixa, SubCategorias>() {
+
+                    @Override
+                    protected void updateItem(SubCategorias item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (item == null) {
+                            setText(null);
+                        } else {
+                            setText(item.getDescricao());
+                        }
+                    }
+                };
+
+                return cell;
+            });
+            subCatColumn.setCellValueFactory(new PropertyValueFactory<>("codSubCat"));
+
             TableColumn paymentColumn = new TableColumn("Pagamento");
             paymentColumn.setCellFactory(column -> {
                 TableCell<FluxoCaixa, Integer> cell = new TableCell<FluxoCaixa, Integer>() {
@@ -148,13 +174,31 @@ public class FluxoCaixaController implements Initializable {
 
                 return cell;
             });
+
             paymentColumn.setCellValueFactory(new PropertyValueFactory<>("formaPagto"));
 
             this.table.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
                 setValues(newSelection);
             });
 
-            this.table.getColumns().addAll(idColumn, dateColumn, descriptionColumn,valueColumn, catColumn, paymentColumn);
+            this.sub_category.setCellFactory(column -> {
+                ListCell<SubCategorias> cell = new ListCell<SubCategorias>() {
+
+                    @Override
+                    protected void updateItem(SubCategorias item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setText(null);
+                        } else {
+                            setText(item.getDescricao());
+                        }
+                    }
+                };
+
+                return cell;
+            });
+
+            this.table.getColumns().addAll(idColumn, dateColumn, descriptionColumn, valueColumn, catColumn,subCatColumn, paymentColumn);
 
             this.table.setItems(listaFluxoCaixa);
 
@@ -185,6 +229,9 @@ public class FluxoCaixaController implements Initializable {
         this.selectedModel.setFormaPagto(1);
         this.selectedModel.setValor(value_converted);
         this.selectedModel.setCodCat(this.category.getValue());
+        if (this.selectedModel.getCodCat() != null) {
+            this.selectedModel.setCodSubCat(this.sub_category.getValue());
+        }
 
         try {
             this.banco.inserir(this.selectedModel);
@@ -216,6 +263,9 @@ public class FluxoCaixaController implements Initializable {
 
         this.selectedModel.setValor(value_converted);
         this.selectedModel.setCodCat(this.category.getValue());
+        if (this.selectedModel.getCodCat() != null) {
+            this.selectedModel.setCodSubCat(this.sub_category.getValue());
+        }
         try {
             banco.editar(this.selectedModel);
             this.flushItems();
@@ -254,6 +304,12 @@ public class FluxoCaixaController implements Initializable {
         this.date.setValue(Helper.convertToLocalDate(this.selectedModel.getDataOcorrencia()));
         this.category.setValue(this.selectedModel.getCodCat());
         this.payment_method.setValue(Pagamento.values()[this.selectedModel.getFormaPagto()]);
+        if (this.selectedModel.getCodSubCat() != null) {
+            this.sub_category.setValue(this.selectedModel.getCodSubCat());
+        }
+        else{
+            this.sub_category.setValue(null);
+        }
     }
 
     public void flushItems() {
@@ -265,5 +321,14 @@ public class FluxoCaixaController implements Initializable {
         } finally {
             this.table.setItems(listaFluxoCaixa);
         }
+    }
+
+    @FXML
+    private void checkSubCategory(ActionEvent event) {
+        this.sub_category.setDisable(false);
+        System.out.println(this.category.getValue().getSubCategoriasCollection());
+        lista_sub_categoria = FXCollections.observableArrayList(this.category.getValue().getSubCategoriasCollection());
+        this.sub_category.getItems().clear();
+        this.sub_category.setItems(lista_sub_categoria);
     }
 }
