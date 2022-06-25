@@ -10,6 +10,9 @@ import Entidades.FluxoCaixa;
 =======
 import Entidades.Pagamento;
 import Entidades.SubCategorias;
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 import controllers.exceptions.NonexistentEntityException;
 import helpers.Helper;
@@ -91,6 +94,9 @@ public class FluxoCaixaController implements Initializable {
 =======
             listaCategoria = FXCollections.observableArrayList(categoria_service.consultar());
             System.out.println(categoria_service.consultar(1).getSubCategoriasCollection());
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 
             TableColumn idColumn = new TableColumn("ID");
