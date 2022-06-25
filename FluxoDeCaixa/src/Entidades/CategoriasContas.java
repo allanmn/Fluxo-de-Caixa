@@ -86,7 +86,6 @@ public class CategoriasContas implements Serializable {
     }
 
     public Collection<SubCategorias> getSubCategoriasCollection() {
-        System.out.println(subCategoriasCollection);
         return subCategoriasCollection;
     }
 
