@@ -9,16 +9,16 @@ package Entidades;
  * @author beraldo
  */
 public enum Pagamento {
-    CC("Cartão de Crédito", 1),
-    DINHEIRO("DINHEIRO", 2),
-    BOLETO("Boleto", 3),
-    DEPOSITO("Deposito",4),
-    CONVENIO("Convênio", 5);
+    CC(0,"Cartão de Crédito"),
+    DINHEIRO(1,"Dinheiro"),
+    BOLETO(2,"Boleto"),
+    DEPOSITO(3,"Deposito"),
+    CONVENIO(4,"Convênio");
 
     private int valor;
     private String nome;
 
-    private Pagamento(String nome, int valor) {
+    private Pagamento(int valor, String nome) {
         this.valor = valor;
         this.nome = nome;
     }

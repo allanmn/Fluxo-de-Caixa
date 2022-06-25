@@ -5,9 +5,6 @@
 package Main;
 
 import bd.DatabaseController;
-import bd.Leitor;
-import java.io.EOFException;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import javafx.application.Application;
 import static javafx.application.Application.launch;

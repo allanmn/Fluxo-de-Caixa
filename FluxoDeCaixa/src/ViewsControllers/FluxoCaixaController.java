@@ -4,8 +4,11 @@
  */
 package ViewsControllers;
 
+import DAO.CategoriaContaDAO;
 import DAO.FluxoCaixaDAO;
+import Entidades.CategoriasContas;
 import Entidades.FluxoCaixa;
+import Entidades.Pagamento;
 import controllers.exceptions.NonexistentEntityException;
 import helpers.Helper;
 import java.net.URL;
@@ -43,9 +46,9 @@ public class FluxoCaixaController implements Initializable {
     @FXML
     private DatePicker date;
     @FXML
-    private ComboBox<?> payment_method;
+    private ComboBox<Pagamento> payment_method;
     @FXML
-    private ComboBox<?> category;
+    private ComboBox<CategoriasContas> category;
     @FXML
     private TableView<FluxoCaixa> table;
     @FXML
@@ -54,10 +57,15 @@ public class FluxoCaixaController implements Initializable {
     private Button edit;
 
     private FluxoCaixaDAO banco;
+    private CategoriaContaDAO categoria_service;
 
     private FluxoCaixa selectedModel;
 
     private ObservableList<FluxoCaixa> listaFluxoCaixa;
+
+    private ObservableList<CategoriasContas> listaCategoria;
+
+    private ObservableList<Pagamento> listaPagamento;
 
     /**
      * Initializes the controller class.
@@ -66,9 +74,12 @@ public class FluxoCaixaController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         try {
             this.banco = new FluxoCaixaDAO();
+            this.categoria_service = new CategoriaContaDAO();
             this.selectedModel = new FluxoCaixa();
 
             listaFluxoCaixa = FXCollections.observableArrayList(banco.consultar());
+            listaCategoria = FXCollections.observableArrayList(categoria_service.consultar());
+            listaPagamento = FXCollections.observableArrayList(Pagamento.values());
 
             TableColumn idColumn = new TableColumn("ID");
             idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -80,18 +91,75 @@ public class FluxoCaixaController implements Initializable {
             valueColumn.setCellValueFactory(new PropertyValueFactory<>("valor"));
 
             TableColumn dateColumn = new TableColumn("Data de Ocorrencia");
+            dateColumn.setCellFactory(column -> {
+                TableCell<FluxoCaixa, Date> cell = new TableCell<FluxoCaixa, Date>() {
+                    private SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+
+                    @Override
+                    protected void updateItem(Date item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setText(null);
+                        } else {
+                            setText(format.format(item));
+                        }
+                    }
+                };
+
+                return cell;
+            });
             dateColumn.setCellValueFactory(new PropertyValueFactory<>("dataOcorrencia"));
 
+            TableColumn catColumn = new TableColumn("Categoria");
+            catColumn.setCellFactory(column -> {
+                TableCell<FluxoCaixa, CategoriasContas> cell = new TableCell<FluxoCaixa, CategoriasContas>() {
+
+                    @Override
+                    protected void updateItem(CategoriasContas item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (item == null) {
+                            setText(null);
+                        } else {
+                            setText(item.getDescricao());
+                        }
+                    }
+                };
+
+                return cell;
+            });
+            catColumn.setCellValueFactory(new PropertyValueFactory<>("codCat"));
+
             TableColumn paymentColumn = new TableColumn("Pagamento");
+            paymentColumn.setCellFactory(column -> {
+                TableCell<FluxoCaixa, Integer> cell = new TableCell<FluxoCaixa, Integer>() {
+
+                    @Override
+                    protected void updateItem(Integer item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setText(null);
+                        } else {
+                            Pagamento pgto = Pagamento.values()[item];
+                            setText(pgto.getNome());
+                        }
+                    }
+                };
+
+                return cell;
+            });
             paymentColumn.setCellValueFactory(new PropertyValueFactory<>("formaPagto"));
 
             this.table.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
                 setValues(newSelection);
             });
 
-            this.table.getColumns().addAll(idColumn, dateColumn, descriptionColumn, paymentColumn);
+            this.table.getColumns().addAll(idColumn, dateColumn, descriptionColumn,valueColumn, catColumn, paymentColumn);
 
             this.table.setItems(listaFluxoCaixa);
+
+            this.category.setItems(listaCategoria);
+
+            this.payment_method.setItems(listaPagamento);
         } catch (NonexistentEntityException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
@@ -100,17 +168,13 @@ public class FluxoCaixaController implements Initializable {
 
     @FXML
     public void save() {
-        Date converted_date ;
+        Date converted_date;
         Double value_converted;
         try {
             converted_date = Date.from(this.date.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
             value_converted = Double.parseDouble(this.value.getText());
-        }catch(NullPointerException null_ex){
-            JOptionPane.showMessageDialog(null, "Valores Não foram informados");
-            return;
-        }
-        catch(Exception ex){
-            System.out.println(ex.getMessage());
+        } catch (NullPointerException | NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "Valores inválidos informados");
             return;
         }
 
@@ -119,6 +183,7 @@ public class FluxoCaixaController implements Initializable {
         this.selectedModel.setDescricao(this.description.getText());
         this.selectedModel.setFormaPagto(1);
         this.selectedModel.setValor(value_converted);
+        this.selectedModel.setCodCat(this.category.getValue());
 
         try {
             this.banco.inserir(this.selectedModel);
@@ -132,17 +197,26 @@ public class FluxoCaixaController implements Initializable {
 
     @FXML
     public void update() {
-        Date converted_date = Helper.convertToDate(this.date.getValue());
-        Double value_converted = Double.parseDouble(this.value.getText());
-        FluxoCaixa updated_model = new FluxoCaixa(
-                this.selectedModel.getId(),
-                converted_date,
-                this.description.getText(),
-                value_converted,
-                1
-        );
+        Date converted_date;
+        Double value_converted;
         try {
-            banco.editar(updated_model);
+            converted_date = Date.from(this.date.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
+            value_converted = Double.parseDouble(this.value.getText());
+        } catch (NullPointerException | NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "Valores Não foram informados");
+            return;
+        }
+
+        this.selectedModel.setDataOcorrencia(converted_date);
+        this.selectedModel.setDescricao(this.description.getText());
+        this.selectedModel.setFormaPagto(this.payment_method.getValue().getValor());
+        this.selectedModel.setValor(value_converted);
+        this.selectedModel.setCodCat(this.category.getValue());
+
+        this.selectedModel.setValor(value_converted);
+        this.selectedModel.setCodCat(this.category.getValue());
+        try {
+            banco.editar(this.selectedModel);
             this.flushItems();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
@@ -177,6 +251,8 @@ public class FluxoCaixaController implements Initializable {
         this.description.setText(this.selectedModel.getDescricao());
         this.value.setText(Double.toString(this.selectedModel.getValor()));
         this.date.setValue(Helper.convertToLocalDate(this.selectedModel.getDataOcorrencia()));
+        this.category.setValue(this.selectedModel.getCodCat());
+        this.payment_method.setValue(Pagamento.values()[this.selectedModel.getFormaPagto()]);
     }
 
     public void flushItems() {
