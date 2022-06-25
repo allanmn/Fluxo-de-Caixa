@@ -6,6 +6,11 @@ package ViewsControllers;
 
 import DAO.FluxoCaixaDAO;
 import Entidades.FluxoCaixa;
+<<<<<<< Updated upstream
+=======
+import Entidades.Pagamento;
+import Entidades.SubCategorias;
+>>>>>>> Stashed changes
 import controllers.exceptions.NonexistentEntityException;
 import helpers.Helper;
 import java.net.URL;
@@ -13,8 +18,11 @@ import java.text.SimpleDateFormat;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -59,6 +67,16 @@ public class FluxoCaixaController implements Initializable {
 
     private ObservableList<FluxoCaixa> listaFluxoCaixa;
 
+<<<<<<< Updated upstream
+=======
+    private ObservableList<CategoriasContas> listaCategoria;
+    private ObservableList<SubCategorias> lista_sub_categoria;
+
+    private ObservableList<Pagamento> listaPagamento;
+    @FXML
+    private ComboBox<SubCategorias> sub_category;
+
+>>>>>>> Stashed changes
     /**
      * Initializes the controller class.
      */
@@ -69,6 +87,11 @@ public class FluxoCaixaController implements Initializable {
             this.selectedModel = new FluxoCaixa();
 
             listaFluxoCaixa = FXCollections.observableArrayList(banco.consultar());
+<<<<<<< Updated upstream
+=======
+            listaCategoria = FXCollections.observableArrayList(categoria_service.consultar());
+            System.out.println(categoria_service.consultar(1).getSubCategoriasCollection());
+>>>>>>> Stashed changes
 
             TableColumn idColumn = new TableColumn("ID");
             idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -94,6 +117,8 @@ public class FluxoCaixaController implements Initializable {
             this.table.setItems(listaFluxoCaixa);
         } catch (NonexistentEntityException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
+        } catch (Exception ex) {
+            Logger.getLogger(FluxoCaixaController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -188,5 +213,12 @@ public class FluxoCaixaController implements Initializable {
         } finally {
             this.table.setItems(listaFluxoCaixa);
         }
+    }
+
+    @FXML
+    private void checkSubCategory(ActionEvent event) {
+        System.out.println(this.category.getValue().getSubCategoriasCollection());
+        this.sub_category.setDisable(false);
+        this.lista_sub_categoria = FXCollections.observableArrayList(this.category.getValue().getSubCategoriasCollection());
     }
 }
