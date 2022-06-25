@@ -5,7 +5,7 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewsControllers.DashboardPageController">
+<BorderPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewsControllers.DashboardPageController">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
@@ -15,6 +15,10 @@
                   <MenuItem mnemonicParsing="false" onAction="#openCategoryPage" text="Listar/Cadastrar" />
                </items></Menu>
           <Menu fx:id="payments" mnemonicParsing="false" onAction="#openPaymentsPage" text="Pagamentos" />
+            <Menu fx:id="fluxo_caixa" mnemonicParsing="false" text="Fluxo de Caixa">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#openFluxoPage" text="Abrir" />
+               </items></Menu>
         </menus>
       </MenuBar>
    </top>

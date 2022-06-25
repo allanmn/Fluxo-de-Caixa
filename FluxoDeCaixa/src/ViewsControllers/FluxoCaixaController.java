@@ -80,6 +80,7 @@ public class FluxoCaixaController implements Initializable {
             listaFluxoCaixa = FXCollections.observableArrayList(banco.consultar());
             listaCategoria = FXCollections.observableArrayList(categoria_service.consultar());
             listaPagamento = FXCollections.observableArrayList(Pagamento.values());
+            System.out.println(categoria_service.consultar());
 
             TableColumn idColumn = new TableColumn("ID");
             idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));

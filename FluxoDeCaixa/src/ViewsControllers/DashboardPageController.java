@@ -34,6 +34,8 @@ public class DashboardPageController implements Initializable {
     private Menu categories;
     @FXML
     private Menu payments;
+    @FXML
+    private Menu fluxo_caixa;
 
     /**
      * Initializes the controller class.
@@ -41,8 +43,8 @@ public class DashboardPageController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
-    
+    }
+
     private void openView(String name) throws IOException {
         Parent newView = (Pane) new FXMLLoader().load(getClass().getClassLoader().getResource("./Views/" + name));
         Scene scene = new Scene(newView);
@@ -67,5 +69,15 @@ public class DashboardPageController implements Initializable {
     @FXML
     private void openPaymentsPage(ActionEvent event) {
     }
-    
+
+    @FXML
+    private void openFluxoPage(ActionEvent event) {
+        try {
+            openView("FluxoCaixa.fxml");
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Erro: " + ex.getMessage());
+            ex.printStackTrace();
+        }
+    }
 }
+

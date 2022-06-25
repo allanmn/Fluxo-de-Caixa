@@ -25,7 +25,7 @@ public class Main extends Application {
         DatabaseController.createDB();
         DatabaseController.createTables();
         
-        Parent root = FXMLLoader.load(getClass().getResource("/Views/FluxoCaixa.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/Views/DashboardPage.fxml"));
         
         Scene scene = new Scene(root, 800, 600);
         

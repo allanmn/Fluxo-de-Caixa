@@ -123,7 +123,8 @@ public class CategoriasContas implements Serializable {
 
     @Override
     public String toString() {
-        return  getDescricao();
+        return "CategoriasContas{" + "codigo=" + codigo + ", descricao=" + descricao + ", positiva=" + positiva + ", subCategoriasCollection=" + subCategoriasCollection + ", fluxoCaixaCollection=" + fluxoCaixaCollection + '}';
     }
+
     
 }
