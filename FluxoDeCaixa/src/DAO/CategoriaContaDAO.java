@@ -22,7 +22,7 @@ public class CategoriaContaDAO extends ModeloDAO<CategoriasContas, CategoriasCon
     @Override
     public void inserir(CategoriasContas objeto) throws Exception, ValidationException {
         if (objeto.getDescricao() == null || objeto.getDescricao().equals("")) {
-            throw new ValidationException("Descrição");
+            throw new ValidationException("Descricao");
         }
         
         objetoJPA.create(objeto);
