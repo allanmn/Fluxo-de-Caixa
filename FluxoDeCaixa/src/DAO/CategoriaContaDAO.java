@@ -4,10 +4,11 @@
  */
 package DAO;
 
+import Controllers.CategoriasContasJpaController;
 import Exceptions.ValidationException;
-import controllers.CategoriasContasJpaController;
 import controllers.exceptions.NonexistentEntityException;
 import Entidades.CategoriasContas;
+import Entidades.SubCategorias;
 import java.util.List;
 
 /**
@@ -23,6 +24,12 @@ public class CategoriaContaDAO extends ModeloDAO<CategoriasContas, CategoriasCon
     public void inserir(CategoriasContas objeto) throws Exception, ValidationException {
         if (objeto.getDescricao() == null || objeto.getDescricao().equals("")) {
             throw new ValidationException("Descricao");
+        }
+        
+        if (objeto.getSubCategoriasCollection() != null) {
+            for(SubCategorias subCategoria : objeto.getSubCategoriasCollection()) {
+                
+            }
         }
         
         objetoJPA.create(objeto);

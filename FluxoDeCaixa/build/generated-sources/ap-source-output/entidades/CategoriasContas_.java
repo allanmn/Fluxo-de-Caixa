@@ -1,13 +1,13 @@
-package entidades;
+package Entidades;
 
-import entidades.FluxoCaixa;
-import entidades.SubCategorias;
+import Entidades.FluxoCaixa;
+import Entidades.SubCategorias;
 import javax.annotation.processing.Generated;
 import javax.persistence.metamodel.CollectionAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="org.eclipse.persistence.internal.jpa.modelgen.CanonicalModelProcessor", date="2022-06-22T23:11:56", comments="EclipseLink-2.7.9.v20210604-rNA")
+@Generated(value="org.eclipse.persistence.internal.jpa.modelgen.CanonicalModelProcessor", date="2022-06-25T16:25:50", comments="EclipseLink-2.7.10.v20211216-rNA")
 @StaticMetamodel(CategoriasContas.class)
 public class CategoriasContas_ { 
 

@@ -67,5 +67,16 @@ public class DashboardPageController implements Initializable {
     @FXML
     private void openPaymentsPage(ActionEvent event) {
     }
+
+    @FXML
+    private void openSubCategoryPage(ActionEvent event) {
+        try {
+            openView("SubCategoryPage.fxml");
+        } catch (Exception ex) {
+            System.out.println(ex);
+//            JOptionPane.showMessageDialog(null, "Erro: " + ex.getMessage());
+            ex.printStackTrace();
+        }
+    }
     
 }

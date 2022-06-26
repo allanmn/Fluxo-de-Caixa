@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package controllers;
+package Controllers;
 
 import controllers.exceptions.IllegalOrphanException;
 import controllers.exceptions.NonexistentEntityException;
@@ -80,9 +80,9 @@ public class CategoriasContasJpaController implements Serializable {
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
-            if (findCategoriasContas(categoriasContas.getCodigo()) != null) {
-                throw new PreexistingEntityException("CategoriasContas " + categoriasContas + " already exists.", ex);
-            }
+//            if (findCategoriasContas(categoriasContas.getCodigo()) != null) {
+//                throw new PreexistingEntityException("CategoriasContas " + categoriasContas + " already exists.", ex);
+//            }
             throw ex;
         } finally {
             if (em != null) {
