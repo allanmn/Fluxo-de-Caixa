@@ -88,6 +88,23 @@ public class FluxoCaixaDAO extends ModeloDAO<FluxoCaixa, FluxoCaixaJpaController
         }
     }
     
+    public List<FluxoCaixa> findByDateReceber(Date data) throws Exception {
+        CategoriaContaDAO category_service = new CategoriaContaDAO();
+        
+        CategoriasContas receber = category_service.consultar(2);
+        
+        EntityManager em = objetoJPA.getEntityManager();
+        try {
+            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+            Query q = em.createNamedQuery("FluxoCaixa.findByDataOcorrenciaAndAPagar", FluxoCaixa.class);
+            q.setParameter("dataOcorrencia", data);
+            q.setParameter("codCat", receber);
+            return q.getResultList();
+        } finally {
+            em.close();
+        }
+    }
+    
     public List<FluxoCaixa> consultar() throws NonexistentEntityException{
         List lista = objetoJPA.findFluxoCaixaEntities();
         if(lista == null){
