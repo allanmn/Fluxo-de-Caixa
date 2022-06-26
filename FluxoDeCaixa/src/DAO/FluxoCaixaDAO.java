@@ -4,10 +4,15 @@
  */
 package DAO;
 
+import Entidades.CategoriasContas;
 import controllers.FluxoCaixaJpaController;
 import controllers.exceptions.NonexistentEntityException;
 import Entidades.FluxoCaixa;
+import java.util.Date;
 import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaQuery;
 
 /**
  *
@@ -63,6 +68,40 @@ public class FluxoCaixaDAO extends ModeloDAO<FluxoCaixa, FluxoCaixaJpaController
             throw new Exception(ex.getMessage());
         } finally {
             return fluxo_caixa;
+        }
+    }
+    
+    public List<FluxoCaixa> findByDate(Date data) throws Exception {
+        CategoriaContaDAO category_service = new CategoriaContaDAO();
+        
+        CategoriasContas pagar = category_service.consultar(1);
+        
+        EntityManager em = objetoJPA.getEntityManager();
+        try {
+            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+            Query q = em.createNamedQuery("FluxoCaixa.findByDataOcorrenciaAndAPagar", FluxoCaixa.class);
+            q.setParameter("dataOcorrencia", data);
+            q.setParameter("codCat", pagar);
+            return q.getResultList();
+        } finally {
+            em.close();
+        }
+    }
+    
+    public List<FluxoCaixa> findByDateReceber(Date data) throws Exception {
+        CategoriaContaDAO category_service = new CategoriaContaDAO();
+        
+        CategoriasContas receber = category_service.consultar(2);
+        
+        EntityManager em = objetoJPA.getEntityManager();
+        try {
+            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+            Query q = em.createNamedQuery("FluxoCaixa.findByDataOcorrenciaAndAPagar", FluxoCaixa.class);
+            q.setParameter("dataOcorrencia", data);
+            q.setParameter("codCat", receber);
+            return q.getResultList();
+        } finally {
+            em.close();
         }
     }
     

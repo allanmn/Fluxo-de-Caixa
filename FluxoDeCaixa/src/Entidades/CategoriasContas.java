@@ -123,7 +123,7 @@ public class CategoriasContas implements Serializable {
 
     @Override
     public String toString() {
-        return  getDescricao();
+        return descricao;
     }
-    
+
 }
