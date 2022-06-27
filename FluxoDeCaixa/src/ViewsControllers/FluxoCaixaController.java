@@ -326,7 +326,6 @@ public class FluxoCaixaController implements Initializable {
     @FXML
     private void checkSubCategory(ActionEvent event) {
         this.sub_category.setDisable(false);
-        System.out.println(this.category.getValue().getSubCategoriasCollection());
         lista_sub_categoria = FXCollections.observableArrayList(this.category.getValue().getSubCategoriasCollection());
         this.sub_category.getItems().clear();
         this.sub_category.setItems(lista_sub_categoria);
