@@ -23,9 +23,9 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws IOException {
         DatabaseController.createDB();
         DatabaseController.createTables();
-
+        
         Parent root = FXMLLoader.load(getClass().getResource("/Views/DashboardPage.fxml"));
-
+        
         Scene scene = new Scene(root, 800, 600);
 
         primaryStage.setTitle("Fluxo de Caixa");

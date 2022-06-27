@@ -59,6 +59,7 @@ public class DashboardPageController implements Initializable {
     @FXML
     private Menu payments;
     @FXML
+<<<<<<< HEAD
     private DatePicker dateFilter;
 
     private CategoriaContaDAO category_service;
@@ -90,6 +91,9 @@ public class DashboardPageController implements Initializable {
     private Label totalPagar;
     @FXML
     private Label subtotal;
+=======
+    private Menu fluxo_caixa;
+>>>>>>> dev-beraldo
 
     /**
      * Initializes the controller class.
@@ -222,6 +226,7 @@ public class DashboardPageController implements Initializable {
 
         this.chartContasPerCatData = FXCollections.observableArrayList(data);
         this.chartContasPorCat.setData(chartContasPerCatData);
+        // TODO
     }
 
     private void openView(String name) throws IOException {
@@ -300,4 +305,13 @@ public class DashboardPageController implements Initializable {
         this.getContasReceber();
     }
 
+    private void openFluxoPage(ActionEvent event) {
+        try {
+            openView("FluxoCaixa.fxml");
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Erro: " + ex.getMessage());
+            ex.printStackTrace();
+        }
+    }
 }
+

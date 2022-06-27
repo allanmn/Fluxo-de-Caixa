@@ -95,6 +95,7 @@ public class CategoryPageController implements Initializable {
         try {
             banco = new CategoriaContaDAO();
             listaCategorias = FXCollections.observableArrayList(banco.consultar());
+            System.out.println(listaCategorias);
             tabela.setItems(listaCategorias);
             colCod.setCellValueFactory(
                     new PropertyValueFactory<>("codigo")
